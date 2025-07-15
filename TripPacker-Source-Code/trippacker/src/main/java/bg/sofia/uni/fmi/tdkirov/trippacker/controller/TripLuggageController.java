@@ -1,8 +1,8 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.controller;
 
-import bg.sofia.uni.fmi.tdkirov.trippacker.dto.TripLuggageResponseDto;
-import bg.sofia.uni.fmi.tdkirov.trippacker.dto.TripLuggageUpdateDto;
-import bg.sofia.uni.fmi.tdkirov.trippacker.dto.TripLuggageCreateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageResponseDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageUpdateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageCreateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.service.TripLuggageService;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

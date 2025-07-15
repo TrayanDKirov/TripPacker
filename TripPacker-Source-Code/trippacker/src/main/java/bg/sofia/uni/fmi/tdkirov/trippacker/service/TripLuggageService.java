@@ -1,8 +1,8 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.service;
 
-import bg.sofia.uni.fmi.tdkirov.trippacker.dto.TripLuggageCreateDto;
-import bg.sofia.uni.fmi.tdkirov.trippacker.dto.TripLuggageResponseDto;
-import bg.sofia.uni.fmi.tdkirov.trippacker.dto.TripLuggageUpdateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageCreateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageResponseDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageUpdateDto;
 
 import java.util.Set;
 
