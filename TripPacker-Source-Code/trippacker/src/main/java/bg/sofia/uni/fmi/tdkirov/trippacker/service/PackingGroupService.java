@@ -3,6 +3,8 @@ package bg.sofia.uni.fmi.tdkirov.trippacker.service;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupCreateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupResponseDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupUpdateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.exception.packinggroup.PackingGroupNotFound;
+import bg.sofia.uni.fmi.tdkirov.trippacker.exception.packinggroup.PackingGroupNotOwnedByYou;
 
 import java.util.Set;
 
@@ -26,6 +28,9 @@ public interface PackingGroupService {
      * @param currentUser the username of the current user, must not be null.
      *
      * @return the response data transfer object of the packing group associated with this id.
+     *
+     * @throws PackingGroupNotFound if packing group with this id was not found.
+     * @throws PackingGroupNotOwnedByYou if packing group is not owned by the current user.
      */
     PackingGroupResponseDto getPackingGroupById(Long id, String currentUser);
 
@@ -46,6 +51,9 @@ public interface PackingGroupService {
      * @param id a unique identifier of the packing group, must not be null.
      * @param packingGroupDto the update data transfer object, must not be null.
      * @param currentUser the username of the current user, must not be null.
+     *
+     * @throws PackingGroupNotFound if packing group with this id was not found.
+     * @throws PackingGroupNotOwnedByYou if packing group is not owned by the current user.
      */
     void updatePackingGroup(Long id, PackingGroupUpdateDto packingGroupDto, String currentUser);
 
@@ -53,6 +61,9 @@ public interface PackingGroupService {
      * Deletes PackingGroup entity associated with this id from the database.
      *
      * @param id a unique identifier of the packing group, must not be null.
+     *
+     * @throws PackingGroupNotFound if packing group with this id was not found.
+     * @throws PackingGroupNotOwnedByYou if packing group is not owned by the current user.
      */
     void deletePackingGroupById(Long id, String currentUser);
 }
