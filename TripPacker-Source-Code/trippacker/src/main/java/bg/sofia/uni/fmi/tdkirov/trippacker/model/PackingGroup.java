@@ -15,6 +15,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -23,6 +24,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "packing_groups")
 public class PackingGroup {
@@ -44,7 +46,7 @@ public class PackingGroup {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by_id", nullable = false)
-    private User creator;
+    private User createdBy;
 
     public PackingGroup(String name, Set<Item> items) {
         this.name = name;
