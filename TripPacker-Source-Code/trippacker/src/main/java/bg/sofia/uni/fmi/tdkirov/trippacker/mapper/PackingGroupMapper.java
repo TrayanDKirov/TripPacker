@@ -4,9 +4,9 @@ import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupCreateDt
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupResponseDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.PackingGroup;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.User;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PackingGroupMapper { // TODO check response dto
     public PackingGroup toEntity(PackingGroupCreateDto packingGroupDto, User user) {
         PackingGroup result = new PackingGroup(packingGroupDto.getName(), null);
