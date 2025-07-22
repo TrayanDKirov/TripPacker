@@ -38,7 +38,7 @@ public class PackingGroup {
 
     @OneToMany(mappedBy = "packingGroup", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Setter(AccessLevel.NONE)
-    private Set<Item> items;
+    private Set<ItemToPack> items;
 
     @Column(name = "created_at", nullable = false)
     @Setter(AccessLevel.NONE)
@@ -48,7 +48,7 @@ public class PackingGroup {
     @JoinColumn(name = "created_by_id", nullable = false)
     private User createdBy;
 
-    public PackingGroup(String name, Set<Item> items) {
+    public PackingGroup(String name, Set<ItemToPack> items) {
         this.name = name;
         this.createdAt = LocalDateTime.now();
 
