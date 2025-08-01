@@ -18,6 +18,6 @@ public class ItemToPackCreateDto {
     @Positive
     private int quantityToPack;
 
-    private long tripId;
-    private long packingGroupId;
+    private Long tripId;
+    private Long packingGroupId;
 }

@@ -48,6 +48,10 @@ public class PackingGroup {
     @JoinColumn(name = "created_by_id", nullable = false)
     private User createdBy;
 
+    public PackingGroup(Long id) {
+        this.id = id;
+    }
+
     public PackingGroup(String name, Set<ItemToPack> items) {
         this.name = name;
         this.createdAt = LocalDateTime.now();
