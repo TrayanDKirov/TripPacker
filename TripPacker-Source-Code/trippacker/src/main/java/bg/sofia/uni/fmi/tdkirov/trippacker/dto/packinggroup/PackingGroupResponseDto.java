@@ -1,15 +1,17 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup;
 
-import jakarta.validation.constraints.NotNull;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.itemtopack.ItemToPackResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @AllArgsConstructor
 @Data
 public class PackingGroupResponseDto {
-    @NotNull
     private Long id;
-
-    @NotNull
     private String name;
+    private Set<ItemToPackResponseDto> items;
+    private LocalDateTime createdAt;
 }
