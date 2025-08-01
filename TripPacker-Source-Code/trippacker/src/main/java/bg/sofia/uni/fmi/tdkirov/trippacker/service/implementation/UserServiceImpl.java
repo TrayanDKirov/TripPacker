@@ -7,6 +7,8 @@ import bg.sofia.uni.fmi.tdkirov.trippacker.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
@@ -17,5 +19,11 @@ public class UserServiceImpl implements UserService {
         User user = new User(userDto.getUsername(), userDto.getPassword());
 
         return repository.save(user).getId();
+    }
+
+    @Override
+    public List<User> getUsers() {
+
+        return List.copyOf(repository.findAll());
     }
 }
