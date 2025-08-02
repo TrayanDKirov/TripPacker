@@ -4,7 +4,7 @@ import bg.sofia.uni.fmi.tdkirov.trippacker.dto.itemtopack.ItemToPackCreateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.itemtopack.ItemToPackResponseDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.itemtopack.ItemToPackCreateDtoException;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.ItemToPack;
-import bg.sofia.uni.fmi.tdkirov.trippacker.model.PackingGroup;
+import bg.sofia.uni.fmi.tdkirov.trippacker.model.GroupToPack;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.TripLuggage;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.User;
 import org.springframework.stereotype.Component;
@@ -23,9 +23,9 @@ public class ItemToPackMapper {
         ItemToPack result;
 
         if (itemToPackDto.getPackingGroupId() != null) {
-            PackingGroup packingGroup = new PackingGroup(itemToPackDto.getPackingGroupId());
+            GroupToPack groupToPack = new GroupToPack(itemToPackDto.getPackingGroupId());
 
-            result = new ItemToPack(itemToPackDto.getName(), itemToPackDto.getQuantityToPack(), user, packingGroup, null);
+            result = new ItemToPack(itemToPackDto.getName(), itemToPackDto.getQuantityToPack(), user, groupToPack, null);
         }
         else {
             TripLuggage tripLuggage = new TripLuggage(itemToPackDto.getTripId());

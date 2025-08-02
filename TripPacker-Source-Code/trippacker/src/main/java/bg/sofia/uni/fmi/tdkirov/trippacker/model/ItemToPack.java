@@ -1,6 +1,5 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.model;
 
-import bg.sofia.uni.fmi.tdkirov.trippacker.service.TripLuggageService;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,7 +13,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
 
 import java.time.LocalDateTime;
 
@@ -37,7 +35,7 @@ public class ItemToPack {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
-    private PackingGroup packingGroup;
+    private GroupToPack groupToPack;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trip_id")
@@ -51,10 +49,10 @@ public class ItemToPack {
     @Setter(AccessLevel.NONE)
     private LocalDateTime createdAt;
 
-    public ItemToPack(String name, int quantityToPack, User createdBy, PackingGroup packingGroup, TripLuggage trip) {
+    public ItemToPack(String name, int quantityToPack, User createdBy, GroupToPack groupToPack, TripLuggage trip) {
         this.name = name;
         this.quantityToPack = quantityToPack;
-        this.packingGroup = packingGroup;
+        this.groupToPack = groupToPack;
         this.trip = trip;
         this.createdBy = createdBy;
 

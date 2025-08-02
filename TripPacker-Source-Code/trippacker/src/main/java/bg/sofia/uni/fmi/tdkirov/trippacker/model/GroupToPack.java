@@ -27,7 +27,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "packing_groups")
-public class PackingGroup {
+public class GroupToPack {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -48,11 +48,11 @@ public class PackingGroup {
     @JoinColumn(name = "created_by_id", nullable = false)
     private User createdBy;
 
-    public PackingGroup(Long id) {
+    public GroupToPack(Long id) {
         this.id = id;
     }
 
-    public PackingGroup(String name, Set<ItemToPack> items) {
+    public GroupToPack(String name, Set<ItemToPack> items) {
         this.name = name;
         this.createdAt = LocalDateTime.now();
 
@@ -61,7 +61,7 @@ public class PackingGroup {
         }
     }
 
-    public static PackingGroup fromDtoAndUser(PackingGroupCreateDto packingGroupDto, User creator) {
+    public static GroupToPack fromDtoAndUser(PackingGroupCreateDto packingGroupDto, User creator) {
         return null;
     }
 

@@ -6,7 +6,7 @@ import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupUpdateDt
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.packinggroup.PackingGroupNotFound;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.packinggroup.PackingGroupNotOwnedByYou;
 import bg.sofia.uni.fmi.tdkirov.trippacker.mapper.PackingGroupMapper;
-import bg.sofia.uni.fmi.tdkirov.trippacker.model.PackingGroup;
+import bg.sofia.uni.fmi.tdkirov.trippacker.model.GroupToPack;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.User;
 import bg.sofia.uni.fmi.tdkirov.trippacker.repository.PackingGroupRepository;
 import bg.sofia.uni.fmi.tdkirov.trippacker.repository.UserRepository;
@@ -29,9 +29,9 @@ public class PackingGroupServiceImpl implements PackingGroupService {
     public Long createPackingGroup(PackingGroupCreateDto packingGroupDto, String currentUser) {
         User user = userRepository.findByUsername(currentUser).get();
 
-        PackingGroup packingGroup = packingGroupMapper.toEntity(packingGroupDto, user);
+        GroupToPack groupToPack = packingGroupMapper.toEntity(packingGroupDto, user);
 
-        return packingGroupRepository.save(packingGroup).getId();
+        return packingGroupRepository.save(groupToPack).getId();
     }
 
     private void assertNotFound(Long id) {
@@ -53,19 +53,19 @@ public class PackingGroupServiceImpl implements PackingGroupService {
         assertNotFound(id);
         assertNotOwnedByUser(id, user);
 
-        PackingGroup packingGroup = packingGroupRepository.findById(id).get();
+        GroupToPack groupToPack = packingGroupRepository.findById(id).get();
 
-        return packingGroupMapper.toResponseDto(packingGroup);
+        return packingGroupMapper.toResponseDto(groupToPack);
     }
 
     @Override
     public Set<PackingGroupResponseDto> getAllPackingGroups(String currentUser) {
         User user = userRepository.findByUsername(currentUser).get();
 
-        Set<PackingGroup> packingGroups = packingGroupRepository.findByCreatedById(user.getId());
+        Set<GroupToPack> groupToPacks = packingGroupRepository.findByCreatedById(user.getId());
 
         Set<PackingGroupResponseDto> result = new LinkedHashSet<>();
-        for (PackingGroup curr : packingGroups) {
+        for (GroupToPack curr : groupToPacks) {
             result.add(packingGroupMapper.toResponseDto(curr));
         }
 
