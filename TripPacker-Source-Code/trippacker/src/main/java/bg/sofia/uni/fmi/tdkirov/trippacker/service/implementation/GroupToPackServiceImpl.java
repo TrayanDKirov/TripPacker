@@ -5,7 +5,7 @@ import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackResponseDt
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackUpdateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.grouptopack.GroupToPackNotFound;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.grouptopack.GroupToPackNotOwnedByYou;
-import bg.sofia.uni.fmi.tdkirov.trippacker.mapper.PackingGroupMapper;
+import bg.sofia.uni.fmi.tdkirov.trippacker.mapper.GroupToPackMapper;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.GroupToPack;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.User;
 import bg.sofia.uni.fmi.tdkirov.trippacker.repository.GroupToPackRepository;
@@ -23,13 +23,13 @@ public class GroupToPackServiceImpl implements GroupToPackService {
     private UserRepository userRepository;
     private GroupToPackRepository packingGroupRepository;
 
-    private PackingGroupMapper packingGroupMapper;
+    private GroupToPackMapper groupToPackMapper;
 
     @Override
     public Long createPackingGroup(GroupToPackCreateDto packingGroupDto, String currentUser) {
         User user = userRepository.findByUsername(currentUser).get();
 
-        GroupToPack groupToPack = packingGroupMapper.toEntity(packingGroupDto, user);
+        GroupToPack groupToPack = groupToPackMapper.toEntity(packingGroupDto, user);
 
         return packingGroupRepository.save(groupToPack).getId();
     }
@@ -55,7 +55,7 @@ public class GroupToPackServiceImpl implements GroupToPackService {
 
         GroupToPack groupToPack = packingGroupRepository.findById(id).get();
 
-        return packingGroupMapper.toResponseDto(groupToPack);
+        return groupToPackMapper.toResponseDto(groupToPack);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class GroupToPackServiceImpl implements GroupToPackService {
 
         Set<GroupToPackResponseDto> result = new LinkedHashSet<>();
         for (GroupToPack curr : groupToPacks) {
-            result.add(packingGroupMapper.toResponseDto(curr));
+            result.add(groupToPackMapper.toResponseDto(curr));
         }
 
         return Set.copyOf(result);

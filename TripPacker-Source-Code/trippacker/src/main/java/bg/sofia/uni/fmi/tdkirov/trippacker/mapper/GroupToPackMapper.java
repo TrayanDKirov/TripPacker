@@ -14,7 +14,7 @@ import java.util.Set;
 
 @AllArgsConstructor
 @Component
-public class PackingGroupMapper { // TODO check response dto
+public class GroupToPackMapper { // TODO check response dto
     private ItemToPackMapper itemToPackMapper;
 
     public GroupToPack toEntity(GroupToPackCreateDto packingGroupDto, User user) {
