@@ -1,16 +1,16 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.service.implementation;
 
-import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupCreateDto;
-import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupResponseDto;
-import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupUpdateDto;
-import bg.sofia.uni.fmi.tdkirov.trippacker.exception.packinggroup.PackingGroupNotFound;
-import bg.sofia.uni.fmi.tdkirov.trippacker.exception.packinggroup.PackingGroupNotOwnedByYou;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackCreateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackResponseDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackUpdateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.exception.grouptopack.GroupToPackNotFound;
+import bg.sofia.uni.fmi.tdkirov.trippacker.exception.grouptopack.GroupToPackNotOwnedByYou;
 import bg.sofia.uni.fmi.tdkirov.trippacker.mapper.PackingGroupMapper;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.GroupToPack;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.User;
-import bg.sofia.uni.fmi.tdkirov.trippacker.repository.PackingGroupRepository;
+import bg.sofia.uni.fmi.tdkirov.trippacker.repository.GroupToPackRepository;
 import bg.sofia.uni.fmi.tdkirov.trippacker.repository.UserRepository;
-import bg.sofia.uni.fmi.tdkirov.trippacker.service.PackingGroupService;
+import bg.sofia.uni.fmi.tdkirov.trippacker.service.GroupToPackService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +19,14 @@ import java.util.Set;
 
 @AllArgsConstructor
 @Service
-public class PackingGroupServiceImpl implements PackingGroupService {
+public class GroupToPackServiceImpl implements GroupToPackService {
     private UserRepository userRepository;
-    private PackingGroupRepository packingGroupRepository;
+    private GroupToPackRepository packingGroupRepository;
 
     private PackingGroupMapper packingGroupMapper;
 
     @Override
-    public Long createPackingGroup(PackingGroupCreateDto packingGroupDto, String currentUser) {
+    public Long createPackingGroup(GroupToPackCreateDto packingGroupDto, String currentUser) {
         User user = userRepository.findByUsername(currentUser).get();
 
         GroupToPack groupToPack = packingGroupMapper.toEntity(packingGroupDto, user);
@@ -36,18 +36,18 @@ public class PackingGroupServiceImpl implements PackingGroupService {
 
     private void assertNotFound(Long id) {
         if (!packingGroupRepository.existsById(id)) {
-            throw new PackingGroupNotFound(id);
+            throw new GroupToPackNotFound(id);
         }
     }
 
     private void assertNotOwnedByUser(Long packingGroupID, User currentUser) {
         if (!packingGroupRepository.existsByIdAndCreatedById(packingGroupID, currentUser.getId())) {
-            throw new PackingGroupNotOwnedByYou(packingGroupID, currentUser);
+            throw new GroupToPackNotOwnedByYou(packingGroupID, currentUser);
         }
     }
 
     @Override
-    public PackingGroupResponseDto getPackingGroupById(Long id, String currentUser) {
+    public GroupToPackResponseDto getPackingGroupById(Long id, String currentUser) {
         User user = userRepository.findByUsername(currentUser).get();
 
         assertNotFound(id);
@@ -59,12 +59,12 @@ public class PackingGroupServiceImpl implements PackingGroupService {
     }
 
     @Override
-    public Set<PackingGroupResponseDto> getAllPackingGroups(String currentUser) {
+    public Set<GroupToPackResponseDto> getAllPackingGroups(String currentUser) {
         User user = userRepository.findByUsername(currentUser).get();
 
         Set<GroupToPack> groupToPacks = packingGroupRepository.findByCreatedById(user.getId());
 
-        Set<PackingGroupResponseDto> result = new LinkedHashSet<>();
+        Set<GroupToPackResponseDto> result = new LinkedHashSet<>();
         for (GroupToPack curr : groupToPacks) {
             result.add(packingGroupMapper.toResponseDto(curr));
         }
@@ -73,7 +73,7 @@ public class PackingGroupServiceImpl implements PackingGroupService {
     }
 
     @Override
-    public void updatePackingGroup(Long id, PackingGroupUpdateDto packingGroupDto, String currentUser) {
+    public void updatePackingGroup(Long id, GroupToPackUpdateDto packingGroupDto, String currentUser) {
 
     }
 

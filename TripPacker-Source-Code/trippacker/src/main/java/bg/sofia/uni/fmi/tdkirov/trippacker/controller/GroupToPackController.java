@@ -1,9 +1,9 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.controller;
 
-import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupCreateDto;
-import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupResponseDto;
-import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupUpdateDto;
-import bg.sofia.uni.fmi.tdkirov.trippacker.service.PackingGroupService;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackCreateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackResponseDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackUpdateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.service.GroupToPackService;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,42 +21,42 @@ import java.util.Set;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/packing-group")
-public class PackingGroupController {
-    private PackingGroupService service;
+@RequestMapping("/api/group-to-pack")
+public class GroupToPackController {
+    private GroupToPackService service;
 
     @PostMapping
-    public ResponseEntity createPackingGroup(@NotNull @RequestBody PackingGroupCreateDto packingGroupDto) {
+    public ResponseEntity createPackingGroup(@NotNull @RequestBody GroupToPackCreateDto packingGroupDto) {
         Long id = service.createPackingGroup(packingGroupDto, "");
 
-        URI location = URI.create("/api/v1/packing-group/" + id);
+        URI location = URI.create("/api/group-to-pack" + id);
 
         return ResponseEntity.created(location).build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PackingGroupResponseDto> getPackingGroup(@NotNull @PathVariable Long id) {
-        PackingGroupResponseDto result = service.getPackingGroupById(id, "");
+    public ResponseEntity<GroupToPackResponseDto> getPackingGroup(@NotNull @PathVariable Long id) {
+        GroupToPackResponseDto result = service.getPackingGroupById(id, "");
 
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Set<PackingGroupResponseDto>> getAllPackingGroups() {
-        Set<PackingGroupResponseDto> result = service.getAllPackingGroups("");
+    public ResponseEntity<Set<GroupToPackResponseDto>> getAllPackingGroups() {
+        Set<GroupToPackResponseDto> result = service.getAllPackingGroups("");
 
         return ResponseEntity.ok(result);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity updatePackingGroup(@NotNull @PathVariable Long id,
-                                             @NotNull @RequestBody PackingGroupUpdateDto packingGroupDto) {
+                                             @NotNull @RequestBody GroupToPackUpdateDto packingGroupDto) {
         service.updatePackingGroup(id, packingGroupDto, "");
 
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity deletePackingGroup(@NotNull @PathVariable Long id) {
         service.deletePackingGroupById(id, "");
 

@@ -1,4 +1,4 @@
-package bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup;
+package bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack;
 
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.itemtopack.ItemToPackResponseDto;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import java.util.Set;
 
 @AllArgsConstructor
 @Data
-public class PackingGroupResponseDto {
+public class GroupToPackResponseDto {
     private Long id;
     private String name;
     private Set<ItemToPackResponseDto> items;

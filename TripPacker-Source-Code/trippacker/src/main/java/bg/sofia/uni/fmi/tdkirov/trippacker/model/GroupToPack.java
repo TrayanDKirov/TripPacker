@@ -1,7 +1,7 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.model;
 
-import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupCreateDto;
-import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupResponseDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackCreateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackResponseDto;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -61,11 +61,11 @@ public class GroupToPack {
         }
     }
 
-    public static GroupToPack fromDtoAndUser(PackingGroupCreateDto packingGroupDto, User creator) {
+    public static GroupToPack fromDtoAndUser(GroupToPackCreateDto packingGroupDto, User creator) {
         return null;
     }
 
-    public PackingGroupResponseDto toResponseDto() {
+    public GroupToPackResponseDto toResponseDto() {
         return null;
     }
 }

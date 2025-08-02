@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Set;
 
 @Repository
-public interface PackingGroupRepository extends JpaRepository<GroupToPack, Long> {
+public interface GroupToPackRepository extends JpaRepository<GroupToPack, Long> {
     Set<GroupToPack> findByCreatedById(Long createdById);
 
     boolean existsById(Long id);
