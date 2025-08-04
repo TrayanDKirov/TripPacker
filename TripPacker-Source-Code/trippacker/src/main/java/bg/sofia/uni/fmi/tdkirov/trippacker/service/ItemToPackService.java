@@ -6,7 +6,7 @@ import bg.sofia.uni.fmi.tdkirov.trippacker.exception.itemtopack.ItemToPackNotOwn
 
 public interface ItemToPackService {
     /**
-     * Creates an item using a creation data transfer object, associates it with a specific trip or packingGroup
+     * Creates an item using a creation data transfer object, associates it with a specific trip or groupToPack
      * and saves it into the database.
      *
      * @param itemToPackDto the creation data transfer object, must not be null.
