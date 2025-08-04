@@ -42,6 +42,10 @@ public class PackingGroup {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    public PackingGroup(Long id) {
+        this.id = id;
+    }
+
     public PackingGroup(GroupToPack group, TripLuggage trip, User creator) {
         this.group = group;
         this.trip = trip;

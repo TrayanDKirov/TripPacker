@@ -49,6 +49,10 @@ public class ItemToPack {
     @Setter(AccessLevel.NONE)
     private LocalDateTime createdAt;
 
+    public ItemToPack(Long id) {
+        this.id = id;
+    }
+
     public ItemToPack(String name, int quantityToPack, User createdBy, GroupToPack groupToPack, TripLuggage trip) {
         this.name = name;
         this.quantityToPack = quantityToPack;

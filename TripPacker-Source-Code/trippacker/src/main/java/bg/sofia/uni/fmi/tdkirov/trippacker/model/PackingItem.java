@@ -52,9 +52,8 @@ public class PackingItem {
     @Setter(AccessLevel.NONE)
     private LocalDateTime createdAt;
 
-    public PackingItem(Integer packedQuantity, ItemToPack itemToPack,
-                       TripLuggage trip, PackingGroup group, User creator) {
-        this.packedQuantity = packedQuantity;
+    public PackingItem(ItemToPack itemToPack, TripLuggage trip,
+                       PackingGroup group, User creator) {
         this.isPacked = false;
         this.trip = trip;
         this.group = group;
