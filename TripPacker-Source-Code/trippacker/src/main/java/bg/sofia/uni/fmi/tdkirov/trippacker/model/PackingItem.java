@@ -37,7 +37,7 @@ public class PackingItem {
     private ItemToPack item;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "trip_id", nullable = false)
+    @JoinColumn(name = "trip_id")
     private TripLuggage trip;
 
     @ManyToOne(fetch = FetchType.LAZY)
