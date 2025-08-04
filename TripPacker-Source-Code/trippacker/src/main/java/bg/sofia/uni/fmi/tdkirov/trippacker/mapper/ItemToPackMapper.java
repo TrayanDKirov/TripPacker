@@ -2,7 +2,7 @@ package bg.sofia.uni.fmi.tdkirov.trippacker.mapper;
 
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.itemtopack.ItemToPackCreateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.itemtopack.ItemToPackResponseDto;
-import bg.sofia.uni.fmi.tdkirov.trippacker.exception.itemtopack.ItemToPackCreateDtoException;
+import bg.sofia.uni.fmi.tdkirov.trippacker.exception.itemtopack.ItemToPackCreationException;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.ItemToPack;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.GroupToPack;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.TripLuggage;
@@ -14,7 +14,7 @@ public class ItemToPackMapper {
     private void assertItemToPackCreateDtoIsValid(ItemToPackCreateDto itemToPackDto) {
         if ((itemToPackDto.getPackingGroupId() == null && itemToPackDto.getTripId() == null) ||
         itemToPackDto.getPackingGroupId() != null && itemToPackDto.getTripId() != null) {
-            throw new ItemToPackCreateDtoException();
+            throw new ItemToPackCreationException();
         }
     }
 
