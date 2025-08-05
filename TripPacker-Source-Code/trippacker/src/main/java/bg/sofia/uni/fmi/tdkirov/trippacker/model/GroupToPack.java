@@ -36,7 +36,7 @@ public class GroupToPack {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "packingGroup", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "groupToPack", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Setter(AccessLevel.NONE)
     private Set<ItemToPack> items;
 

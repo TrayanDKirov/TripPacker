@@ -46,18 +46,18 @@ public class PackingItem {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by_id", nullable = false)
-    private User creator;
+    private User createdBy;
 
     @Column(name = "created_at", nullable = false)
     @Setter(AccessLevel.NONE)
     private LocalDateTime createdAt;
 
     public PackingItem(ItemToPack itemToPack, TripLuggage trip,
-                       PackingGroup group, User creator) {
+                       PackingGroup group, User createdBy) {
         this.isPacked = false;
         this.trip = trip;
         this.group = group;
-        this.creator = creator;
+        this.createdBy = createdBy;
 
         this.createdAt = LocalDateTime.now();
     }

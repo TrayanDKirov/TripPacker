@@ -33,17 +33,17 @@ public class TripLuggage {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "trip_id", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Setter(AccessLevel.NONE)
     private Set<PackingGroup> packingGroups;
 
-    @OneToMany(mappedBy = "trip_id", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Setter(AccessLevel.NONE)
     private Set<PackingItem> packingItems;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by_id", nullable = false)
-    private User creator;
+    private User createdBy;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -52,9 +52,9 @@ public class TripLuggage {
         this.id = id;
     }
 
-    public TripLuggage(String name, User creator) {
+    public TripLuggage(String name, User createdBy) {
         this.name = name;
-        this.creator = creator;
+        this.createdBy = createdBy;
 
         this.packingGroups = new LinkedHashSet<>();
         this.packingItems = new LinkedHashSet<>();

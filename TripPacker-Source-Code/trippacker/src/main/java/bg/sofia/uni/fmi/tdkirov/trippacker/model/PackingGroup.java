@@ -37,7 +37,7 @@ public class PackingGroup {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by_id", nullable = false)
-    private User creator;
+    private User createdBy;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -46,10 +46,10 @@ public class PackingGroup {
         this.id = id;
     }
 
-    public PackingGroup(GroupToPack group, TripLuggage trip, User creator) {
+    public PackingGroup(GroupToPack group, TripLuggage trip, User createdBy) {
         this.group = group;
         this.trip = trip;
-        this.creator = creator;
+        this.createdBy = createdBy;
 
         this.createdAt = LocalDateTime.now();
     }
