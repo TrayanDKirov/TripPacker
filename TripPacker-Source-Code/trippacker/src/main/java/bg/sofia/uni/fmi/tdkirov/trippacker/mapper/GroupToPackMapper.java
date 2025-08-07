@@ -1,5 +1,6 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.mapper;
 
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackPreviewDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.itemtopack.ItemToPackResponseDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackCreateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackResponseDto;
@@ -14,7 +15,7 @@ import java.util.Set;
 
 @AllArgsConstructor
 @Component
-public class GroupToPackMapper { // TODO check response dto
+public class GroupToPackMapper {
     private ItemToPackMapper itemToPackMapper;
 
     public GroupToPack toEntity(GroupToPackCreateDto packingGroupDto, User user) {
@@ -32,5 +33,10 @@ public class GroupToPackMapper { // TODO check response dto
 
         return new GroupToPackResponseDto(groupToPack.getId(), groupToPack.getName(),
             items, groupToPack.getCreatedAt());
+    }
+
+
+    public GroupToPackPreviewDto toPreviewDto(GroupToPack groupToPack) {
+        return new GroupToPackPreviewDto(groupToPack.getId(), groupToPack.getName(), groupToPack.getCreatedAt());
     }
 }

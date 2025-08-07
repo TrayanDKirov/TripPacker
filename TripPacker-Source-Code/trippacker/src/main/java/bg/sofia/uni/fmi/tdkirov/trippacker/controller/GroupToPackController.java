@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.controller;
 
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackCreateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackPreviewDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackResponseDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackUpdateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.service.GroupToPackService;
@@ -42,8 +43,8 @@ public class GroupToPackController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Set<GroupToPackResponseDto>> getAllPackingGroups() {
-        Set<GroupToPackResponseDto> result = service.getAllPackingGroups("");
+    public ResponseEntity<Set<GroupToPackPreviewDto>> getAllPackingGroupPreviews() {
+        Set<GroupToPackPreviewDto> result = service.getAllPackingGroupPreviews("");
 
         return ResponseEntity.ok(result);
     }

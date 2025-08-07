@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.service;
 
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackCreateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackPreviewDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackResponseDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackUpdateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.grouptopack.GroupToPackNotFound;
@@ -36,13 +37,13 @@ public interface GroupToPackService {
 
     /**
      * Retrieves all GroupToPack entities of the current user and returns them as
-     * an unmodifiable set of response data transfer objects.
+     * an unmodifiable set of preview response data transfer objects.
      *
      * @param currentUser the username of the current user, must not be null.
      *
      * @return an unmodifiable set of response data transfer objects.
      */
-    Set<GroupToPackResponseDto> getAllPackingGroups(String currentUser);
+    Set<GroupToPackPreviewDto> getAllPackingGroupPreviews(String currentUser);
 
     /**
      * Updates an existing GroupToPack entity associated with this id and saves it into the database,

@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.service.implementation;
 
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackCreateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackPreviewDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackResponseDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackUpdateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.grouptopack.GroupToPackNotFound;
@@ -59,14 +60,14 @@ public class GroupToPackServiceImpl implements GroupToPackService {
     }
 
     @Override
-    public Set<GroupToPackResponseDto> getAllPackingGroups(String currentUser) {
+    public Set<GroupToPackPreviewDto> getAllPackingGroupPreviews(String currentUser) {
         User user = userRepository.findByUsername(currentUser).get();
 
         Set<GroupToPack> groupToPacks = packingGroupRepository.findByCreatedById(user.getId());
 
-        Set<GroupToPackResponseDto> result = new LinkedHashSet<>();
+        Set<GroupToPackPreviewDto> result = new LinkedHashSet<>();
         for (GroupToPack curr : groupToPacks) {
-            result.add(groupToPackMapper.toResponseDto(curr));
+            result.add(groupToPackMapper.toPreviewDto(curr));
         }
 
         return Set.copyOf(result);
