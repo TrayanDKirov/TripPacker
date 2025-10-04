@@ -13,5 +13,5 @@ public class GroupToPackResponseDto {
     private Long id;
     private String name;
     private Set<ItemToPackResponseDto> items;
-    private LocalDateTime createdAt;
+    private String createdAt;
 }

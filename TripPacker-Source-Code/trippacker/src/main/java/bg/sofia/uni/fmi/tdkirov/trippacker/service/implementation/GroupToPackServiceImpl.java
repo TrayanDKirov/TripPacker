@@ -22,7 +22,7 @@ import java.util.Set;
 @Service
 public class GroupToPackServiceImpl implements GroupToPackService {
     private UserRepository userRepository;
-    private GroupToPackRepository packingGroupRepository;
+    private GroupToPackRepository groupToPackRepository;
 
     private GroupToPackMapper groupToPackMapper;
 
@@ -32,17 +32,17 @@ public class GroupToPackServiceImpl implements GroupToPackService {
 
         GroupToPack groupToPack = groupToPackMapper.toEntity(packingGroupDto, user);
 
-        return packingGroupRepository.save(groupToPack).getId();
+        return groupToPackRepository.save(groupToPack).getId();
     }
 
     private void assertNotFound(Long id) {
-        if (!packingGroupRepository.existsById(id)) {
+        if (!groupToPackRepository.existsById(id)) {
             throw new GroupToPackNotFound(id);
         }
     }
 
     private void assertNotOwnedByUser(Long packingGroupID, User currentUser) {
-        if (!packingGroupRepository.existsByIdAndCreatedById(packingGroupID, currentUser.getId())) {
+        if (!groupToPackRepository.existsByIdAndCreatedById(packingGroupID, currentUser.getId())) {
             throw new GroupToPackNotOwnedByYou(packingGroupID, currentUser);
         }
     }
@@ -54,7 +54,7 @@ public class GroupToPackServiceImpl implements GroupToPackService {
         assertNotFound(id);
         assertNotOwnedByUser(id, user);
 
-        GroupToPack groupToPack = packingGroupRepository.findById(id).get();
+        GroupToPack groupToPack = groupToPackRepository.findById(id).get();
 
         return groupToPackMapper.toResponseDto(groupToPack);
     }
@@ -63,7 +63,7 @@ public class GroupToPackServiceImpl implements GroupToPackService {
     public Set<GroupToPackPreviewDto> getAllPackingGroupPreviews(String currentUser) {
         User user = userRepository.findByUsername(currentUser).get();
 
-        Set<GroupToPack> groupToPacks = packingGroupRepository.findByCreatedById(user.getId());
+        Set<GroupToPack> groupToPacks = groupToPackRepository.findByCreatedById(user.getId());
 
         Set<GroupToPackPreviewDto> result = new LinkedHashSet<>();
         for (GroupToPack curr : groupToPacks) {
@@ -85,6 +85,6 @@ public class GroupToPackServiceImpl implements GroupToPackService {
         assertNotFound(id);
         assertNotOwnedByUser(id, user);
 
-        packingGroupRepository.deleteById(id);
+        groupToPackRepository.deleteById(id);
     }
 }

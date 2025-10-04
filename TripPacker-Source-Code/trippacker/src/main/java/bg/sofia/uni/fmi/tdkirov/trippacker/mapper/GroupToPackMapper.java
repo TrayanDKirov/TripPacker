@@ -10,6 +10,7 @@ import bg.sofia.uni.fmi.tdkirov.trippacker.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -17,12 +18,23 @@ import java.util.Set;
 @Component
 public class GroupToPackMapper {
     private ItemToPackMapper itemToPackMapper;
+    private final static String PATTERN = "yyyy-MM-dd HH:mm:ss";
+    private final static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(PATTERN);
 
-    public GroupToPack toEntity(GroupToPackCreateDto packingGroupDto, User user) {
-        GroupToPack result = new GroupToPack(packingGroupDto.getName(), null);
+    private final static String DATE_ONLY_PATTERN = "dd MMM yy";
+    private final static DateTimeFormatter DATE_ONLY_FORMATTER =
+        DateTimeFormatter.ofPattern(DATE_ONLY_PATTERN);
+
+    public GroupToPack toEntity(GroupToPackCreateDto groupToPackDto, User user) {
+        GroupToPack result = new GroupToPack(groupToPackDto.getName(), null);
         result.setCreatedBy(user);
 
         return result;
+    }
+
+    public GroupToPackPreviewDto toPreviewDto(GroupToPack groupToPack) {
+        return new GroupToPackPreviewDto(groupToPack.getId(), groupToPack.getName(),
+            DATE_ONLY_FORMATTER.format(groupToPack.getCreatedAt()));
     }
 
     public GroupToPackResponseDto toResponseDto(GroupToPack groupToPack) {
@@ -32,11 +44,6 @@ public class GroupToPackMapper {
         }
 
         return new GroupToPackResponseDto(groupToPack.getId(), groupToPack.getName(),
-            items, groupToPack.getCreatedAt());
-    }
-
-
-    public GroupToPackPreviewDto toPreviewDto(GroupToPack groupToPack) {
-        return new GroupToPackPreviewDto(groupToPack.getId(), groupToPack.getName(), groupToPack.getCreatedAt());
+            items, FORMATTER.format(groupToPack.getCreatedAt()));
     }
 }

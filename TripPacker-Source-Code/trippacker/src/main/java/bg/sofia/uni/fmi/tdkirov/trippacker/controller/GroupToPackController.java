@@ -27,8 +27,8 @@ public class GroupToPackController {
     private GroupToPackService service;
 
     @PostMapping
-    public ResponseEntity createPackingGroup(@NotNull @RequestBody GroupToPackCreateDto packingGroupDto) {
-        Long id = service.createPackingGroup(packingGroupDto, "");
+    public ResponseEntity createPackingGroup(@NotNull @RequestBody GroupToPackCreateDto groupToPackDto) {
+        Long id = service.createPackingGroup(groupToPackDto, "");
 
         URI location = URI.create("/api/group-to-pack" + id);
 
@@ -58,9 +58,9 @@ public class GroupToPackController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deletePackingGroup(@NotNull @PathVariable Long id) {
+    public ResponseEntity<String> deletePackingGroup(@NotNull @PathVariable Long id) {
         service.deletePackingGroupById(id, "");
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Successfully delete group to pack. ");
     }
 }

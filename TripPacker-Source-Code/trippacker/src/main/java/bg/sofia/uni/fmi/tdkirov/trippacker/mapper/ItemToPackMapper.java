@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ItemToPackMapper {
     private void assertItemToPackCreateDtoIsValid(ItemToPackCreateDto itemToPackDto) {
-        if ((itemToPackDto.getPackingGroupId() == null && itemToPackDto.getTripId() == null) ||
-        itemToPackDto.getPackingGroupId() != null && itemToPackDto.getTripId() != null) {
+        if ((itemToPackDto.getGroupId() == null && itemToPackDto.getTripId() == null) ||
+        itemToPackDto.getGroupId() != null && itemToPackDto.getTripId() != null) {
             throw new ItemToPackCreationException();
         }
     }
@@ -22,8 +22,8 @@ public class ItemToPackMapper {
         assertItemToPackCreateDtoIsValid(itemToPackDto);
         ItemToPack result;
 
-        if (itemToPackDto.getPackingGroupId() != null) {
-            GroupToPack groupToPack = new GroupToPack(itemToPackDto.getPackingGroupId());
+        if (itemToPackDto.getGroupId() != null) {
+            GroupToPack groupToPack = new GroupToPack(itemToPackDto.getGroupId());
 
             result = new ItemToPack(itemToPackDto.getName(), itemToPackDto.getQuantityToPack(), user, groupToPack, null);
         }

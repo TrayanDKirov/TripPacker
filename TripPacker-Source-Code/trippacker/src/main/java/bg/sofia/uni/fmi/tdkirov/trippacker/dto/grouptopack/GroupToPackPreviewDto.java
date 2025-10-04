@@ -10,5 +10,5 @@ import java.time.LocalDateTime;
 public class GroupToPackPreviewDto {
     private Long id;
     private String name;
-    private LocalDateTime createdAt;
+    private String createdAt;
 }

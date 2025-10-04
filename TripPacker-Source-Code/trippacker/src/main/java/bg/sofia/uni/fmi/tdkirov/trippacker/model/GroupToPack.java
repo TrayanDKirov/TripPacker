@@ -26,7 +26,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "packing_groups")
+@Table(name = "groups_to_pack")
 public class GroupToPack {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +39,10 @@ public class GroupToPack {
     @OneToMany(mappedBy = "groupToPack", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Setter(AccessLevel.NONE)
     private Set<ItemToPack> items;
+
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Setter(AccessLevel.NONE)
+    private Set<PackingGroup> packingGroups;
 
     @Column(name = "created_at", nullable = false)
     @Setter(AccessLevel.NONE)

@@ -19,5 +19,5 @@ public class ItemToPackCreateDto {
     private int quantityToPack;
 
     private Long tripId;
-    private Long packingGroupId;
+    private Long groupId;
 }

@@ -1,8 +1,11 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.service;
 
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.itemtopack.ItemToPackCreateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.itemtopack.ItemToPackResponseDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.itemtopack.ItemToPackNotFound;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.itemtopack.ItemToPackNotOwnedByYou;
+
+import java.util.Set;
 
 public interface ItemToPackService {
     /**
@@ -15,6 +18,8 @@ public interface ItemToPackService {
      * @return the id of the item in the database.
      */
     Long createItem(ItemToPackCreateDto itemToPackDto, String currentUser);
+
+    Set<ItemToPackResponseDto> getItemsByGroupId(Long groupId, String currentUser);
 
     /**
      * Deletes ItemToPack entity associated with this id from the database.

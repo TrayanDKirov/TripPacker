@@ -1,11 +1,14 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.controller;
 
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.itemtopack.ItemToPackCreateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.itemtopack.ItemToPackResponseDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.service.ItemToPackService;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.util.Set;
 
 @AllArgsConstructor
 @RestController
@@ -29,10 +33,17 @@ public class ItemToPackController {
         return ResponseEntity.created(location).build();
     }
 
+    @GetMapping("/group/{groupId}")
+    public ResponseEntity<Set<ItemToPackResponseDto>> getItemsByGroupId(@NotNull @PathVariable Long groupId) {
+        var items = service.getItemsByGroupId(groupId, "");
+
+        return ResponseEntity.ok(items);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity deleteItemById(@NotNull @PathVariable Long id) {
         service.deleteItemById(id, "");
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Successfully deleted item with id " + id + ". ");
     }
 }
