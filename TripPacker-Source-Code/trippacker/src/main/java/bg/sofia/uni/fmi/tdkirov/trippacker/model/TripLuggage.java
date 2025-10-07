@@ -34,7 +34,6 @@ public class TripLuggage {
     private String name;
 
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @Setter(AccessLevel.NONE)
     private Set<PackingGroup> packingGroups;
 
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -62,12 +61,13 @@ public class TripLuggage {
         this.createdAt = LocalDateTime.now();
     }
 
-
     public void addPackingGroup(PackingGroup packingGroupToAdd) {
         this.packingGroups.add(packingGroupToAdd);
+        packingGroupToAdd.setTrip(this);
     }
 
     public void addPackingItem(PackingItem packingItemToAdd) {
         this.packingItems.add(packingItemToAdd);
+        packingItemToAdd.setTrip(this);
     }
 }

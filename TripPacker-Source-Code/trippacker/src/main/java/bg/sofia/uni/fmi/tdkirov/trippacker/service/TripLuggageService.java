@@ -11,7 +11,8 @@ import java.util.Set;
 public interface TripLuggageService {
     /**
      * Creates a new TripLuggage entity and save it into the database using
-     * a creation data transfer object. And returns it's id.
+     * a creation data transfer object. And initializes all PackingGroups and PackingItems and
+     * saves them into the database. And returns it's id.
      *
      * @param tripLuggageDto the creation data transfer object, must not be null.
      * @param currentUser the username of the current user, must not be null.
