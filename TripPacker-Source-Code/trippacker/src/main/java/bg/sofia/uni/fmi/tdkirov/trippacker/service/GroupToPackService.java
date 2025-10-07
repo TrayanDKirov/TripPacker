@@ -6,10 +6,22 @@ import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackResponseDt
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackUpdateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.grouptopack.GroupToPackNotFound;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.grouptopack.GroupToPackNotOwnedByYou;
+import bg.sofia.uni.fmi.tdkirov.trippacker.model.User;
 
 import java.util.Set;
 
 public interface GroupToPackService {
+    /**
+     * Assets if the group exits and if it is owned be the current user.
+     *
+     * @param id the unique identifier of the group, must not be null.
+     * @param user the current user, must not be null.
+     *
+     * @throws GroupToPackNotFound if packing group with this id was not found.
+     * @throws GroupToPackNotOwnedByYou if packing group is not owned by the current user.
+     */
+    void assertGroupExists(Long id, User user);
+
     /**
      * Creates a new GroupToPack entity and save it into the database using
      * a creation data transfer object. And returns it's id.

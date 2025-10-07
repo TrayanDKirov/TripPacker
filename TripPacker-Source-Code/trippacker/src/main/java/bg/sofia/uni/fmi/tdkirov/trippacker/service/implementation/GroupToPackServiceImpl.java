@@ -26,15 +26,6 @@ public class GroupToPackServiceImpl implements GroupToPackService {
 
     private GroupToPackMapper groupToPackMapper;
 
-    @Override
-    public Long createPackingGroup(GroupToPackCreateDto packingGroupDto, String currentUser) {
-        User user = userRepository.findByUsername(currentUser).get();
-
-        GroupToPack groupToPack = groupToPackMapper.toEntity(packingGroupDto, user);
-
-        return groupToPackRepository.save(groupToPack).getId();
-    }
-
     private void assertNotFound(Long id) {
         if (!groupToPackRepository.existsById(id)) {
             throw new GroupToPackNotFound(id);
@@ -48,11 +39,25 @@ public class GroupToPackServiceImpl implements GroupToPackService {
     }
 
     @Override
+    public void assertGroupExists(Long id, User user) {
+        assertNotFound(id);
+        assertNotOwnedByUser(id, user);
+    }
+
+    @Override
+    public Long createPackingGroup(GroupToPackCreateDto packingGroupDto, String currentUser) {
+        User user = userRepository.findByUsername(currentUser).get();
+
+        GroupToPack groupToPack = groupToPackMapper.toEntity(packingGroupDto, user);
+
+        return groupToPackRepository.save(groupToPack).getId();
+    }
+
+    @Override
     public GroupToPackResponseDto getPackingGroupById(Long id, String currentUser) {
         User user = userRepository.findByUsername(currentUser).get();
 
-        assertNotFound(id);
-        assertNotOwnedByUser(id, user);
+        assertGroupExists(id, user);
 
         GroupToPack groupToPack = groupToPackRepository.findById(id).get();
 
@@ -82,8 +87,7 @@ public class GroupToPackServiceImpl implements GroupToPackService {
     public void deletePackingGroupById(Long id, String currentUser) {
         User user = userRepository.findByUsername(currentUser).get();
 
-        assertNotFound(id);
-        assertNotOwnedByUser(id, user);
+        assertGroupExists(id, user);
 
         groupToPackRepository.deleteById(id);
     }
