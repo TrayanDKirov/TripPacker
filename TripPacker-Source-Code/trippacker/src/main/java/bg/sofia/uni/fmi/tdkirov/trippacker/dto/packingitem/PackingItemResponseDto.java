@@ -8,12 +8,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 public class PackingItemResponseDto {
+    private Long id;
     private Boolean isPacked;
 
     private String name;
 
     private Integer quantityToPack;
     private Integer packedQuantity;
-
-    private LocalDateTime createdAt;
 }

@@ -2,6 +2,7 @@ package bg.sofia.uni.fmi.tdkirov.trippacker.service.implementation;
 
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupCreateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageCreateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggagePreviewDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageResponseDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageUpdateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.tripluggage.TripLuggageNotFound;
@@ -66,13 +67,13 @@ public class TripLuggageServiceImpl implements TripLuggageService {
     }
 
     @Override
-    public Set<TripLuggageResponseDto> getAllTripLuggage(String currentUser) {
+    public Set<TripLuggagePreviewDto> getAllTripLuggage(String currentUser) {
         User user = userRepository.findByUsername(currentUser).get();
 
         Set<TripLuggage> tripLuggageSet = tripLuggageRepository.findByCreatedById(user.getId());
-        Set<TripLuggageResponseDto> result = new LinkedHashSet<>();
+        Set<TripLuggagePreviewDto> result = new LinkedHashSet<>();
         for (TripLuggage curr : tripLuggageSet) {
-            result.add(tripLuggageMapper.toResponseDto(curr));
+            result.add(tripLuggageMapper.toPreviewDto(curr));
         }
 
         return result;
@@ -94,7 +95,7 @@ public class TripLuggageServiceImpl implements TripLuggageService {
     }
 
     private void updateNewGroups(TripLuggage tripLuggage, Set<PackingGroupCreateDto> packingGroupDtos, User user) {
-        deletePackingGroups(tripLuggage, user);
+        tripLuggage.getPackingGroups().clear();
 
         Set<PackingGroup> newGroups = new LinkedHashSet<>();
         for (PackingGroupCreateDto curr : packingGroupDtos) {
@@ -104,7 +105,7 @@ public class TripLuggageServiceImpl implements TripLuggageService {
             newGroups.add(packingGroup);
         }
 
-        tripLuggage.setPackingGroups(newGroups);
+        tripLuggage.getPackingGroups().addAll(newGroups);
     }
 
     @Override

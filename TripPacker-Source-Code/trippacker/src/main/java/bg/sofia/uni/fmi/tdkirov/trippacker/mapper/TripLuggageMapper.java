@@ -4,6 +4,7 @@ import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupCreateDt
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupResponseDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packingitem.PackingItemResponseDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageCreateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggagePreviewDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageResponseDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.PackingGroup;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.PackingItem;
@@ -20,9 +21,15 @@ import java.util.Set;
 public class TripLuggageMapper {
     private PackingItemMapper packingItemMapper;
     private PackingGroupMapper packingGroupMapper;
+    private DateMapper dateMapper;
 
     public TripLuggage toEntity(TripLuggageCreateDto tripLuggageDto, User user) {
         return new TripLuggage(tripLuggageDto.getName(), user);
+    }
+
+    public TripLuggagePreviewDto toPreviewDto(TripLuggage tripLuggage) {
+        return new TripLuggagePreviewDto(tripLuggage.getId(), tripLuggage.getName(),
+            dateMapper.toStringDateOnly(tripLuggage.getCreatedAt()));
     }
 
     public TripLuggageResponseDto toResponseDto(TripLuggage tripLuggage) {
@@ -37,6 +44,6 @@ public class TripLuggageMapper {
         }
 
         return new TripLuggageResponseDto(tripLuggage.getName(), packingGroups,
-            packingItems, tripLuggage.getCreatedAt());
+            packingItems, dateMapper.toStringDateTime(tripLuggage.getCreatedAt()));
     }
 }

@@ -54,7 +54,7 @@ public class GroupToPackServiceImpl implements GroupToPackService {
     }
 
     @Override
-    public GroupToPackResponseDto getPackingGroupById(Long id, String currentUser) {
+    public GroupToPackResponseDto getGroupToPackById(Long id, String currentUser) {
         User user = userRepository.findByUsername(currentUser).get();
 
         assertGroupExists(id, user);

@@ -1,9 +1,7 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.service.implementation;
 
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packinggroup.PackingGroupCreateDto;
-import bg.sofia.uni.fmi.tdkirov.trippacker.exception.grouptopack.GroupToPackNotFound;
 import bg.sofia.uni.fmi.tdkirov.trippacker.mapper.PackingGroupMapper;
-import bg.sofia.uni.fmi.tdkirov.trippacker.mapper.PackingItemMapper;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.GroupToPack;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.ItemToPack;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.PackingGroup;
@@ -15,6 +13,7 @@ import bg.sofia.uni.fmi.tdkirov.trippacker.repository.PackingGroupRepository;
 import bg.sofia.uni.fmi.tdkirov.trippacker.service.GroupToPackService;
 import bg.sofia.uni.fmi.tdkirov.trippacker.service.PackingGroupService;
 import bg.sofia.uni.fmi.tdkirov.trippacker.service.PackingItemService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +29,10 @@ public class PackingGroupServiceImpl implements PackingGroupService {
     private PackingGroupMapper packingGroupMapper;
 
     private PackingGroupRepository packingGroupRepository;
+    private GroupToPackRepository groupToPackRepository;
 
     @Override
+    @Transactional
     public PackingGroup createPackingGroup(PackingGroupCreateDto packingGroupDto, TripLuggage tripLuggage,
                                            User currentUser) {
         groupToPackService.assertGroupExists(packingGroupDto.getGroupToPackId(), currentUser);
@@ -40,8 +41,8 @@ public class PackingGroupServiceImpl implements PackingGroupService {
             .toEntity(packingGroupDto, tripLuggage, currentUser);
 
         PackingGroup createdPackingGroup = packingGroupRepository.save(packingGroup);
+        GroupToPack groupToPack = groupToPackRepository.findById(createdPackingGroup.getGroup().getId()).get();
 
-        GroupToPack groupToPack = createdPackingGroup.getGroup();
         Set<PackingItem> createdItems = new LinkedHashSet<>();
         for (ItemToPack curr : groupToPack.getItems()) {
             PackingItem item = packingItemService
@@ -49,7 +50,7 @@ public class PackingGroupServiceImpl implements PackingGroupService {
 
             createdItems.add(item);
         }
-        createdPackingGroup.setItems(createdItems);
+        createdPackingGroup.getItems().addAll(createdItems);
 
         return packingGroupRepository.save(createdPackingGroup);
     }

@@ -18,12 +18,7 @@ import java.util.Set;
 @Component
 public class GroupToPackMapper {
     private ItemToPackMapper itemToPackMapper;
-    private final static String PATTERN = "yyyy-MM-dd HH:mm:ss";
-    private final static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(PATTERN);
-
-    private final static String DATE_ONLY_PATTERN = "dd MMM yy";
-    private final static DateTimeFormatter DATE_ONLY_FORMATTER =
-        DateTimeFormatter.ofPattern(DATE_ONLY_PATTERN);
+    private DateMapper dateMapper;
 
     public GroupToPack toEntity(GroupToPackCreateDto groupToPackDto, User user) {
         GroupToPack result = new GroupToPack(groupToPackDto.getName(), null);
@@ -34,7 +29,7 @@ public class GroupToPackMapper {
 
     public GroupToPackPreviewDto toPreviewDto(GroupToPack groupToPack) {
         return new GroupToPackPreviewDto(groupToPack.getId(), groupToPack.getName(),
-            DATE_ONLY_FORMATTER.format(groupToPack.getCreatedAt()));
+            dateMapper.toStringDateOnly(groupToPack.getCreatedAt()));
     }
 
     public GroupToPackResponseDto toResponseDto(GroupToPack groupToPack) {
@@ -44,6 +39,6 @@ public class GroupToPackMapper {
         }
 
         return new GroupToPackResponseDto(groupToPack.getId(), groupToPack.getName(),
-            items, FORMATTER.format(groupToPack.getCreatedAt()));
+            items, dateMapper.toStringDateTime(groupToPack.getCreatedAt()));
     }
 }

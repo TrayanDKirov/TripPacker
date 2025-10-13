@@ -1,32 +1,31 @@
-.header-image {
-  width: 300px;
-  position: fixed;
-  top: 0;
-  left: 50%; /* Start from the middle of the page */
-  transform: translateX(-50%); /* Shift left by half its width to center */
-  z-index: 1000; /* Ensures it stays above other content */
-  /*background-color: #ffffff; /* Optional: background to avoid transparency issues */
-  text-align: center; /* Centers the image if it has inline behavior */
+html, body {
+  height: 100%;
+  margin: 0;
 }
 
-.header-image img {
-  width: 100%; /* Adjust as needed (e.g., 50% of the container width) */
-  max-width: 500px; /* Optional: caps the image width */
-  height: auto; /* Maintains aspect ratio */
-  display: block; /* Removes extra space below image */
-  margin: 0 auto; /* Alternative centering method */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Prevent overall page scrolling */
 }
 
-:host {
-  display: block;
-  padding-top: 250px;/* Matches the approximate height of the image; adjust as needed */
+.app-header {
+  flex: 0 0 auto;
+  text-align: center;
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 10;
 }
 
-.content-container {
-  margin-top: 10px; /* Adds space at the top equal to the header image height to prevent overlap with fixed header */
-  display: flex; /* Uses flexbox to control the layout of child elements */
-  justify-content: center; /* Centers the child elements (e.g., routed content) horizontally */
-  align-items: flex-start; /* Aligns the child elements at the top of the container */
-  min-height: calc(100vh - 100px); /* Sets the minimum height to fill the viewport minus the header height */
-  padding: 20px; /* Adds optional padding inside the container for better spacing around content */
+.logo {
+  height: 80px;
+  object-fit: contain;
+}
+
+.app-content {
+  flex: 1 1 auto;
+  overflow-y: auto; /* Scroll only the content, not the header */
+  padding: 20px;
 }

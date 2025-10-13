@@ -8,5 +8,5 @@ import lombok.Data;
 public class PackingItemUpdateDto {
     private Boolean isPacked;
 
-    private Integer quantityToPack;
+    private Integer packedQuantity;
 }

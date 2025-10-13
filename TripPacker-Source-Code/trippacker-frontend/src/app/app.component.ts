@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { GroupToPackComponent } from "./components/group-to-pack/group-to-pack.component";
 import { environment } from '../environments/environment';
 import { RouterOutlet } from '@angular/router';
 
@@ -11,7 +10,7 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  logoUrl: string = `${environment.host}/logo.png`;
+  logoUrl: string = `${environment.host}/logo1.png`;
   
   protected title = 'trippacker-frontend';
 }

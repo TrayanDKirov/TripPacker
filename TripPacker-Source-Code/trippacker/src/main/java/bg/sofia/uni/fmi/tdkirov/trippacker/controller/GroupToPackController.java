@@ -37,7 +37,7 @@ public class GroupToPackController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GroupToPackResponseDto> getPackingGroup(@NotNull @PathVariable Long id) {
-        GroupToPackResponseDto result = service.getPackingGroupById(id, "");
+        GroupToPackResponseDto result = service.getGroupToPackById(id, "");
 
         return ResponseEntity.ok(result);
     }

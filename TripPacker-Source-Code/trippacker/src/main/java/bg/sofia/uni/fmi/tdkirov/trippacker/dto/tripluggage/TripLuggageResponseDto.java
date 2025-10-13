@@ -16,5 +16,5 @@ public class TripLuggageResponseDto {
     private Set<PackingGroupResponseDto> packingGroups;
     private Set<PackingItemResponseDto> packingItems;
 
-    private LocalDateTime createdAt;
+    private String createdAt;
 }

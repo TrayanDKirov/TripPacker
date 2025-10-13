@@ -41,8 +41,7 @@ public class PackingItemMapper {
     public PackingItemResponseDto toResponseDto(PackingItem packingItem) {
         ItemToPack itemToPack = packingItem.getItem();
 
-        return new PackingItemResponseDto(packingItem.getIsPacked(), itemToPack.getName(),
-            itemToPack.getQuantityToPack(), packingItem.getPackedQuantity(),
-            packingItem.getCreatedAt());
+        return new PackingItemResponseDto(packingItem.getId(), packingItem.getIsPacked(), itemToPack.getName(),
+            itemToPack.getQuantityToPack(), packingItem.getPackedQuantity());
     }
 }

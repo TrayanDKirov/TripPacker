@@ -2,6 +2,7 @@ package bg.sofia.uni.fmi.tdkirov.trippacker.service.implementation;
 
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packingitem.PackingItemCreateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packingitem.PackingItemResponseDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packingitem.PackingItemUpdateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.packingitem.PackingItemNotFound;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.packingitem.PackingItemNotOwnedByYou;
 import bg.sofia.uni.fmi.tdkirov.trippacker.mapper.PackingGroupMapper;
@@ -55,6 +56,23 @@ public class PackingItemServiceImpl implements PackingItemService {
     public PackingItem createItem(Long itemToPackId, Long packingGroupId, Long userId) {
         return new PackingItem(new ItemToPack(itemToPackId), null,
             new PackingGroup(packingGroupId), new User(userId));
+    }
+
+    @Override
+    public void updatePackingItemById(Long id, PackingItemUpdateDto packingItemDto, String currentUser) {
+        User user = userRepository.findByUsername(currentUser).get();
+
+        assertItemExists(id, user);
+        PackingItem packingItem = packingItemRepository.findById(id).get();
+
+        if (packingItemDto.getIsPacked() != null) {
+            packingItem.setIsPacked(packingItemDto.getIsPacked());
+        }
+        if (packingItemDto.getPackedQuantity() != null) {
+            packingItem.setPackedQuantity(packingItemDto.getPackedQuantity());
+        }
+
+        packingItemRepository.save(packingItem);
     }
 
     @Override

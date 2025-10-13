@@ -3,14 +3,11 @@ package bg.sofia.uni.fmi.tdkirov.trippacker.service.implementation;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.grouptopack.GroupToPackResponseDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.itemtopack.ItemToPackCreateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.itemtopack.ItemToPackResponseDto;
-import bg.sofia.uni.fmi.tdkirov.trippacker.exception.grouptopack.GroupToPackNotFound;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.itemtopack.ItemToPackNotFound;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.itemtopack.ItemToPackNotOwnedByYou;
 import bg.sofia.uni.fmi.tdkirov.trippacker.mapper.ItemToPackMapper;
-import bg.sofia.uni.fmi.tdkirov.trippacker.model.GroupToPack;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.ItemToPack;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.User;
-import bg.sofia.uni.fmi.tdkirov.trippacker.repository.GroupToPackRepository;
 import bg.sofia.uni.fmi.tdkirov.trippacker.repository.ItemToPackRepository;
 import bg.sofia.uni.fmi.tdkirov.trippacker.repository.UserRepository;
 import bg.sofia.uni.fmi.tdkirov.trippacker.service.GroupToPackService;
@@ -41,7 +38,7 @@ public class ItemToPackServiceImpl implements ItemToPackService {
 
     @Override
     public Set<ItemToPackResponseDto> getItemsByGroupId(Long groupId, String currentUser) {
-        GroupToPackResponseDto group = groupService.getPackingGroupById(groupId, currentUser);
+        GroupToPackResponseDto group = groupService.getGroupToPackById(groupId, currentUser);
 
         return Set.copyOf(group.getItems());
     }

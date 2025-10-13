@@ -55,8 +55,10 @@ public class PackingItem {
     public PackingItem(ItemToPack itemToPack, TripLuggage trip,
                        PackingGroup group, User createdBy) {
         this.isPacked = false;
+        this.packedQuantity = 0;
         this.trip = trip;
         this.group = group;
+        this.item = itemToPack;
         this.createdBy = createdBy;
 
         this.createdAt = LocalDateTime.now();

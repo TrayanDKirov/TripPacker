@@ -1,5 +1,6 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.controller;
 
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggagePreviewDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageResponseDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageUpdateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageCreateDto;
@@ -7,6 +8,7 @@ import bg.sofia.uni.fmi.tdkirov.trippacker.service.TripLuggageService;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -19,9 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
 import java.util.Set;
 
+@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Location")
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/trip-luggage")
+@RequestMapping("/api/trip-luggage")
 public class TripLuggageController {
     private TripLuggageService service;
 
@@ -29,7 +32,7 @@ public class TripLuggageController {
     public ResponseEntity createTripLuggage(@NotNull @RequestBody TripLuggageCreateDto tripLuggageDto) {
         Long id = service.createTripLuggage(tripLuggageDto, "");
 
-        URI location = URI.create("api/v1/trip-luggage/" + id);
+        URI location = URI.create("api/trip-luggage/" + id);
 
         return ResponseEntity.created(location).build();
     }
@@ -42,8 +45,8 @@ public class TripLuggageController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Set<TripLuggageResponseDto>> getAllTripLuggage() {
-        Set<TripLuggageResponseDto> result = service.getAllTripLuggage("");
+    public ResponseEntity<Set<TripLuggagePreviewDto>> getAllTripLuggage() {
+        Set<TripLuggagePreviewDto> result = service.getAllTripLuggage("");
 
         return ResponseEntity.ok(result);
     }

@@ -45,7 +45,7 @@ public interface GroupToPackService {
      * @throws GroupToPackNotFound if packing group with this id was not found.
      * @throws GroupToPackNotOwnedByYou if packing group is not owned by the current user.
      */
-    GroupToPackResponseDto getPackingGroupById(Long id, String currentUser);
+    GroupToPackResponseDto getGroupToPackById(Long id, String currentUser);
 
     /**
      * Retrieves all GroupToPack entities of the current user and returns them as

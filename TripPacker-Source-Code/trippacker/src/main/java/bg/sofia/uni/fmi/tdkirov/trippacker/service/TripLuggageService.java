@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.service;
 
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageCreateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggagePreviewDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageResponseDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.tripluggage.TripLuggageUpdateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.tripluggage.TripLuggageNotFound;
@@ -41,9 +42,9 @@ public interface TripLuggageService {
      *
      * @param currentUser the username of the current user, must not be null.
      *
-     * @return an unmodifiable set of response data transfer objects.
+     * @return an unmodifiable set of preview data transfer objects.
      */
-    Set<TripLuggageResponseDto> getAllTripLuggage(String currentUser);
+    Set<TripLuggagePreviewDto> getAllTripLuggage(String currentUser);
 
     /**
      * Updates an existing TripLuggage entity associated with this id and saves it into the database,

@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.tdkirov.trippacker.service;
 
 import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packingitem.PackingItemCreateDto;
+import bg.sofia.uni.fmi.tdkirov.trippacker.dto.packingitem.PackingItemUpdateDto;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.packingitem.PackingItemNotFound;
 import bg.sofia.uni.fmi.tdkirov.trippacker.exception.packingitem.PackingItemNotOwnedByYou;
 import bg.sofia.uni.fmi.tdkirov.trippacker.model.PackingItem;
@@ -39,6 +40,8 @@ public interface PackingItemService {
      * @return the PackingItem entity returned which has already been saved in the database.
      */
     PackingItem createItem(Long itemToPackId, Long packingGroupId, Long userId);
+
+    void updatePackingItemById(Long id, PackingItemUpdateDto packingItemUpdateDto, String currentUser);
 
     /**
      * Deletes PackingItem entity associated with this id from the database.
