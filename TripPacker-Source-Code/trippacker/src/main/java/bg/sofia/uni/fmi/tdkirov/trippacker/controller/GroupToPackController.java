@@ -8,6 +8,7 @@ import bg.sofia.uni.fmi.tdkirov.trippacker.service.GroupToPackService;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -27,8 +29,9 @@ public class GroupToPackController {
     private GroupToPackService service;
 
     @PostMapping
-    public ResponseEntity createPackingGroup(@NotNull @RequestBody GroupToPackCreateDto groupToPackDto) {
-        Long id = service.createPackingGroup(groupToPackDto, "");
+    public ResponseEntity createPackingGroup(@NotNull @RequestBody GroupToPackCreateDto groupToPackDto,
+                                             Principal principal) {
+        Long id = service.createPackingGroup(groupToPackDto, principal.getName());
 
         URI location = URI.create("/api/group-to-pack" + id);
 
@@ -36,30 +39,33 @@ public class GroupToPackController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GroupToPackResponseDto> getPackingGroup(@NotNull @PathVariable Long id) {
-        GroupToPackResponseDto result = service.getGroupToPackById(id, "");
+    public ResponseEntity<GroupToPackResponseDto> getPackingGroup(@NotNull @PathVariable Long id,
+                                                                  Principal principal) {
+        GroupToPackResponseDto result = service.getGroupToPackById(id, principal.getName());
 
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Set<GroupToPackPreviewDto>> getAllPackingGroupPreviews() {
-        Set<GroupToPackPreviewDto> result = service.getAllPackingGroupPreviews("");
+    public ResponseEntity<Set<GroupToPackPreviewDto>> getAllPackingGroupPreviews(Principal principal) {
+        Set<GroupToPackPreviewDto> result = service.getAllPackingGroupPreviews(principal.getName());
 
         return ResponseEntity.ok(result);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity updatePackingGroup(@NotNull @PathVariable Long id,
-                                             @NotNull @RequestBody GroupToPackUpdateDto packingGroupDto) {
-        service.updatePackingGroup(id, packingGroupDto, "");
+                                             @NotNull @RequestBody GroupToPackUpdateDto packingGroupDto,
+                                             Principal principal) {
+        service.updatePackingGroup(id, packingGroupDto, principal.getName());
 
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePackingGroup(@NotNull @PathVariable Long id) {
-        service.deletePackingGroupById(id, "");
+    public ResponseEntity<String> deletePackingGroup(@NotNull @PathVariable Long id,
+                                                     Principal principal) {
+        service.deletePackingGroupById(id, principal.getName());
 
         return ResponseEntity.ok("Successfully delete group to pack. ");
     }

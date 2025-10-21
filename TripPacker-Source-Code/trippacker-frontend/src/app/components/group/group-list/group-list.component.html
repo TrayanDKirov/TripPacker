@@ -1,0 +1,22 @@
+<button mat-icon-button (click)="refresh()">
+  <mat-icon>refresh</mat-icon>
+</button>
+<div class="cardContainer">
+  <mat-card *ngFor="let group of groups" class="card" appearance="outlined">
+    <mat-card-header class="card-header">
+      <mat-card-title class="card-title">  {{group.name}}  </mat-card-title>
+      <mat-card-subtitle class="card-subtitle"> {{type}} </mat-card-subtitle>
+    </mat-card-header>
+
+    <img mat-card-image src={{iconUrl}} alt="Group to pack icon">
+
+    <mat-card-content class="card-description">
+      <p>{{group.createdAt}}</p>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button matButton (click)="viewGroup(group.id)">VIEW</button>
+      <button mat-raised-button color="warn" (click)="deleteGroupById(group.id)">DELETE</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

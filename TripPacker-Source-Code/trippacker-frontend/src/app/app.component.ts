@@ -10,7 +10,7 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  logoUrl: string = `${environment.host}/logo1.png`;
+  logoUrl: string = `${environment.imagesUrl}/logo1.png`;
   
   protected title = 'trippacker-frontend';
 }

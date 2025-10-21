@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
 import { ItemToPackResponseDto } from '../../../dtos/item-to-pack/item-response.dto';
-import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { ItemToPackService } from '../../../services/item-service/item.service';
 

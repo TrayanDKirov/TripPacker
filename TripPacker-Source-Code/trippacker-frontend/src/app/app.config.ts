@@ -1,17 +1,22 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { GroupToPackService } from './services/group-to-pack.service';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
-import { GroupOverviewList } from './components/group-list/group-list.component';
+import { GroupToPackService } from './services/group/group-to-pack.service';
+import { GroupOverviewList } from './components/group/group-list/group-list.component';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { AuthInterceptor } from './interceptors/request.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(withInterceptors([
+      AuthInterceptor,
+      ErrorInterceptor
+    ])),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
-    provideHttpClient(),
     GroupToPackService,
     GroupOverviewList
   ]

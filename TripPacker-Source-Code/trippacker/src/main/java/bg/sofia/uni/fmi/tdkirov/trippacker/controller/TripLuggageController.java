@@ -8,7 +8,6 @@ import bg.sofia.uni.fmi.tdkirov.trippacker.service.TripLuggageService;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -19,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.Set;
 
-@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "Location")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/trip-luggage")
@@ -29,8 +28,9 @@ public class TripLuggageController {
     private TripLuggageService service;
 
     @PostMapping
-    public ResponseEntity createTripLuggage(@NotNull @RequestBody TripLuggageCreateDto tripLuggageDto) {
-        Long id = service.createTripLuggage(tripLuggageDto, "");
+    public ResponseEntity createTripLuggage(@NotNull @RequestBody TripLuggageCreateDto tripLuggageDto,
+                                            Principal principal) {
+        Long id = service.createTripLuggage(tripLuggageDto, principal.getName());
 
         URI location = URI.create("api/trip-luggage/" + id);
 
@@ -38,30 +38,33 @@ public class TripLuggageController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TripLuggageResponseDto> getTripLuggage(@NotNull @PathVariable Long id) {
-        TripLuggageResponseDto result = service.getTripLuggageById(id, "");
+    public ResponseEntity<TripLuggageResponseDto> getTripLuggage(@NotNull @PathVariable Long id,
+                                                                 Principal principal) {
+        TripLuggageResponseDto result = service.getTripLuggageById(id, principal.getName());
 
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Set<TripLuggagePreviewDto>> getAllTripLuggage() {
-        Set<TripLuggagePreviewDto> result = service.getAllTripLuggage("");
+    public ResponseEntity<Set<TripLuggagePreviewDto>> getAllTripLuggage(Principal principal) {
+        Set<TripLuggagePreviewDto> result = service.getAllTripLuggage(principal.getName());
 
         return ResponseEntity.ok(result);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity updateTripLuggage(@NotNull @PathVariable Long id,
-                                            @NotNull @RequestBody TripLuggageUpdateDto tripLuggageDto) {
-        service.updateTripLuggage(id, tripLuggageDto, "");
+                                            @NotNull @RequestBody TripLuggageUpdateDto tripLuggageDto,
+                                            Principal principal) {
+        service.updateTripLuggage(id, tripLuggageDto, principal.getName());
 
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteTripLuggage(@NotNull @PathVariable Long id) {
-        service.deleteTripLuggageById(id, "");
+    public ResponseEntity deleteTripLuggage(@NotNull @PathVariable Long id,
+                                            Principal principal) {
+        service.deleteTripLuggageById(id, principal.getName());
 
         return ResponseEntity.ok().build();
     }

@@ -1,0 +1,19 @@
+<div class="cardContainer">
+  <mat-card *ngFor="let trip of trips" class="card" appearance="outlined">
+    <mat-card-header class="card-header">
+      <mat-card-title class="card-title">  {{trip.name}}  </mat-card-title>
+      <mat-card-subtitle class="card-subtitle"> {{type}} </mat-card-subtitle>
+    </mat-card-header>
+
+    <img mat-card-image src={{iconUrl}} alt="Group to pack icon">
+
+    <mat-card-content class="card-description">
+      <p>{{trip.createdAt}}</p>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button matButton (click)="viewTrip(trip.id)">VIEW</button>
+      <button mat-raised-button color="warn" (click)="deleteGroupById(trip.id)">DELETE</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

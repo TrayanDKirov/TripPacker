@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { GroupToPackModule } from './components/group-list/group-to-pack.module';
+import { GroupToPackModule } from './components/group/group-list/group-to-pack.module';
 import { AppComponent } from './app.component';
-import { GroupToPackService } from './services/group-to-pack.service';
+import { GroupToPackService } from './services/group/group-to-pack.service';
 import { ItemToPackService } from './services/item-service/item.service';
 
 @NgModule({
@@ -11,4 +11,4 @@ import { ItemToPackService } from './services/item-service/item.service';
   ],
   providers: [GroupToPackService, ItemToPackService],
 })
-export class AppModule {}
+export class AppModule { }

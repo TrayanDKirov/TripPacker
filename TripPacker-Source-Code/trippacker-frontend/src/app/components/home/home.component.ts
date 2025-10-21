@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationSerivce } from '../../services/user/authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class HomeComponent {
 
   constructor(private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthenticationSerivce
   ) { }
 
   navigateToGroups() {
@@ -22,5 +24,11 @@ export class HomeComponent {
 
   navigateToTrips() {
     this.router.navigate([`/trips`], { relativeTo: this.route });
+  }
+
+  logout() {
+    this.authService.logout();
+
+    this.router.navigate([`/login`]);
   }
 }

@@ -31,6 +31,7 @@ public class ItemToPackServiceImpl implements ItemToPackService {
     public Long createItem(ItemToPackCreateDto itemToPackDto, String currentUser) {
         User user = userRepository.findByUsername(currentUser).get();
 
+        groupService.assertGroupExists(itemToPackDto.getGroupId(), user);
         ItemToPack itemToPack = itemToPackMapper.toEntity(itemToPackDto, user);
 
         return itemToPackRepository.save(itemToPack).getId();
