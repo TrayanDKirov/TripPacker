@@ -29,11 +29,12 @@ public class SecurityConfiguration {
             .cors(c -> {})                       // <-- enable CORS in the security chain
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // preflight
-                .requestMatchers("/api/auth/register", "/api/auth/login", "/images/**")
-                .permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers("/api/auth/register", "/api/auth/login", "/images/**").permitAll()
+                .requestMatchers("/api/**").authenticated()
+                .anyRequest().permitAll()
             )
+
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
     }

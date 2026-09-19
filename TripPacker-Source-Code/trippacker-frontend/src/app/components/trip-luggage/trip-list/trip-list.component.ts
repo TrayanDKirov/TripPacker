@@ -6,10 +6,11 @@ import { environment } from '../../../../environments/environment';
 import { TripLuggagePreviewDto } from '../../../dtos/trip-luggage/trip-preview.dto';
 import { TripLuggageService } from '../../../services/trip/trip-service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'trip-list',
-  imports: [CommonModule, MatCardModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule],
   templateUrl: './trip-list.component.html',
   styleUrl: './trip-list.component.css'
 })
@@ -42,5 +43,9 @@ export class TripListComponent {
 
   deleteGroupById(id: number) {
     this.service.deleteTripById(id).subscribe();
+  }
+
+  refresh() {
+    this.getTrips();
   }
 }

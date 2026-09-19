@@ -31,27 +31,26 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
-            String username = jwtUtil.extractUsername(token);
-            System.out.println("Extracted username: " + username);
 
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                if (jwtUtil.validateToken(token)) {
-                    System.out.println("Token validated successfully");
+            if (jwtUtil.validateToken(token) && SecurityContextHolder.getContext().getAuthentication() == null) {
+                System.out.println("Token validated successfully");
 
-                    UserDetails userDetails = User
-                        .withUsername(username)
-                        .password("")
-                        .authorities(Collections.emptyList())
-                        .build();
+                String username = jwtUtil.extractUsername(token);
+                System.out.println("Extracted username: " + username);
 
-                    UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                UserDetails userDetails = User
+                    .withUsername(username)
+                    .password("")
+                    .authorities(Collections.emptyList())
+                    .build();
 
-                    SecurityContextHolder.getContext().setAuthentication(auth);
-                    System.out.println("Authentication set for user: " + username);
-                } else {
-                    System.out.println("Token validation failed!");
-                }
+                UsernamePasswordAuthenticationToken auth =
+                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+                SecurityContextHolder.getContext().setAuthentication(auth);
+                System.out.println("Authentication set for user: " + username);
+            } else {
+                System.out.println("Token validation failed!");
             }
         }
 
