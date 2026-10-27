@@ -87,6 +87,8 @@ The frontend talks to the backend only through the REST API. The request interce
 | `packing_groups` | A group attached to a trip. Links `groups_to_pack` and `trip_luggage` |
 | `packing_items` | One per item in a packing group, with `is_packed` and `packed_quantity` |
 
+![Database Schema](TripPackerDB_schema.png)
+
 Every table has a `created_by_id` foreign key to `users` and a `created_at` timestamp. Deleting a group or a trip cascades to its children.
 
 ---
