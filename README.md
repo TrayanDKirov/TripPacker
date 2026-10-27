@@ -41,31 +41,38 @@ A packing-list planner built with Spring Boot and Angular. Users build reusable 
 
 ---
 
-## Architecture
+## Layered Architecture
 
 ```
-┌──────────────────────────────────────────────────────────┐
-│                   Angular Frontend (:4200)               │
-│                                                          │
-│  Components  ──►  Services  ──►  HttpClient              │
-│      ▲                              │                    │
-│   AuthGuard           Request / Error Interceptors       │
-└─────────────────────────────────────┼────────────────────┘
-                     REST + JWT       │  JSON
-┌─────────────────────────────────────┼────────────────────┐
-│                   Spring Boot Backend (:8080)            │
-│                                     ▼                    │
-│   JwtFilter  ──►  Controllers  ──►  Services  ──►  Repos │
-│                        │               │            │    │
-│                      DTOs ◄─ Mappers ─ Entities     │    │
-│                                                     │    │
-│   HomeController ──► static/index.html (Angular)    │    │
-└─────────────────────────────────────────────────────┼────┘
-                                                      ▼
-                                              PostgreSQL 15
+                    ┌─────────────────────────────────┐
+                    │           Components            │  Angular (:4200)
+                    └────────────────┬────────────────┘
+                    ┌────────────────▼────────────────┐
+                    │       Services  +  HttpClient   │
+                    └────────────────┬────────────────┘
+                    ┌────────────────▼────────────────┐
+                    │  Request / Error  Interceptors  │
+                    └────────────────┬────────────────┘
+                               HTTP  │  REST API+ JWT
+                    ┌────────────────▼────────────────┐
+                    │            JwtFilter            │  Spring Boot (:8080)
+                    └────────────────┬────────────────┘
+                    ┌────────────────▼────────────────┐
+                    │           Controllers           │
+                    └────────────────┬────────────────┘
+                    ┌────────────────▼────────────────┐
+                    │            Services             │
+                    └────────────────┬────────────────┘
+                    ┌────────────────▼────────────────┐
+                    │  Repositories  +  Entities      │
+                    └────────────────┬────────────────┘
+                                     │
+                    ┌────────────────▼────────────────┐
+                    │           PostgreSQL 15         │
+                    └─────────────────────────────────┘
 ```
 
-The frontend talks to the backend only through the REST API under `/api`. The request interceptor attaches the JWT to every call, and `JwtFilter` validates it and fills the Spring Security context. Ownership checks run in the service layer. `HomeController` forwards every non-API, non-file path to `index.html`, so Angular routes like `/trip/5` work on a page refresh.
+The frontend talks to the backend only through the REST API. The request interceptor attaches the JWT to every call, and `JwtFilter` validates it and fills the Spring Security context. Ownership checks run in the service layer. `HomeController` forwards every non-API, non-file path to `index.html`, so Angular routes like `/trip/5` work on a page refresh.
 
 ---
 
@@ -115,7 +122,7 @@ Create endpoints return `201 Created` with the new resource in the `Location` he
 ## Tech Stack
 
 **Backend**
-- **Java 24** and **Spring Boot 3.5**: Web, Data JPA, Security, Validation
+- **Java 24** and **Spring Boot 4.1.1ad**: Web, Data JPA, Security, Validation
 - **[JJWT](https://github.com/jwtk/jjwt)** to issue and validate JWTs
 - **PostgreSQL 15** for the database
 - **Lombok** to reduce boilerplate
@@ -129,6 +136,37 @@ Create endpoints return `201 Created` with the new resource in the `Location` he
 
 **Infrastructure**
 - **Docker** and **Docker Compose**: a multi-stage backend image (Maven build → JRE runtime), a Postgres container and a persistent volume for the database
+
+---
+
+## Demo Seed
+
+On first startup the app automatically creates a demo account you can log in with straight away:
+
+| Field    | Value         |
+|----------|---------------|
+| Username | `ivan`        |
+| Password | `password123` |
+
+The account comes pre-loaded with data so you can explore all the main features without creating anything yourself:
+
+**Groups to pack (reusable templates)**
+| Group | Items |
+|---|---|
+| Toiletries | Toothbrush, Toothpaste, Shampoo, Soap |
+| Laptop | Laptop, Laptop Charger, Mouse, Headphones |
+| Clothes for 2 Days | T-Shirt ×2, Pants ×2, Socks ×2, Underwear ×2 |
+| Clothes for 7 Days | T-Shirt ×7, Pants ×7, Socks ×7, Underwear ×7 |
+
+**Trips**
+| Trip | Groups attached |
+|---|---|
+| Weekend Trip | Clothes for 2 Days, Toiletries |
+| Week Trip | Toiletries, Clothes for 7 Days, Laptop |
+
+Each group attached to a trip has already been expanded into individual packing items, so you can immediately try ticking items off and updating packed quantities.
+
+> The seed runs once — it skips itself if a user named `ivan` already exists.
 
 ---
 
@@ -156,17 +194,9 @@ docker compose up --build
 
 This starts PostgreSQL on `localhost:5432` and the app on `http://localhost:8080`. The backend serves the bundled frontend, so you can open `http://localhost:8080` right away. Tables are created automatically from the JPA entities.
 
-### Running the backend locally (without Docker)
-
-Start only the database container, then run Spring Boot. `application.properties` already points to `localhost:5432`:
-
-```bash
-cd trippacker
-docker compose up -d db
-./mvnw spring-boot:run
-```
-
 ### Running the frontend (development)
+
+Not necessary. The frontend of app can be accessed from `http://localhost:8080`. But the front can still be run separately.
 
 ```bash
 cd trippacker-frontend
@@ -226,11 +256,7 @@ TripPacker-Source-Code/
 - **Edit groups and items**: `GroupToPackUpdateDto` is empty and items can only be created or deleted
 - **Remove a group from a trip**: `PackingGroupServiceImpl.deletePackingGroupById` is not implemented yet
 - **Sync templates with trips**: items added to a group after it was attached to a trip don't show up in that trip
-- **Lock down `/api/v1/user`**: it lets any logged-in user create users and list all users as entities, password hashes included
 - **Proper HTTP statuses**: `GlobalExceptionHandler` returns `400` for everything, so "not found" and "not yours" should map to `404` and `403`
-- **Consistent API versioning**: most routes are under `/api`, but the user controller uses `/api/v1`
 - **Automated frontend bundling**: build the Angular app inside the Dockerfile instead of copying it into `static/` by hand
-- **Database migrations**: use Flyway or Liquibase instead of `ddl-auto=update`
 - **Externalised secrets**: move the database credentials to environment variables only and load the JWT signing key from configuration. Right now it is generated at startup, so every restart logs all users out
 - **Change password**: `User` has a TODO for it
-- **Test coverage**: unit and integration tests for services, controllers and components
